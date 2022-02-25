@@ -1,0 +1,53 @@
+		if (x == null) 
+			return x ;
+		if (key < x.key)
+			x.left = delete1(x.left, key);
+		else if (key > x.key)
+			x.right = delete1(x.right, key);
+		else {
+			if ((x.right == null) || (x.left == null)){
+				Node temp = null;
+				if (temp == x.left){
+                    temp = x.right;
+				}
+                else{
+                    temp = x.left;
+				}
+				if (temp == null){
+					temp = x;
+					x = null;
+				}
+				else{
+					x = temp;
+				}
+			}
+			else{
+				Node temp = min(x.right);
+				x.key = temp.key;
+				x.right = delete1(x.right, temp.key);
+			}
+			
+			
+		}
+		
+		
+		
+		
+		if (x == null)
+			return x;
+		x.height = 1 + Math.max(height(x.left), height(x.right));
+		int balance = checkBalance(x);
+		if(balance > 1 && checkBalance(x.left) >= 0){
+			return rotateRight(x);
+		}
+		if(balance > 1 && checkBalance(x.left) < 0){
+			x.left = rotateLeft(x.left);
+			return rotateRight(x);
+		}
+		if(balance < -1 && checkBalance(x.left) <= 0){
+			return rotateLeft(x);
+		}
+		if(balance < -1 && checkBalance(x.left) > 0){
+			x.right = rotateLeft(x.right);
+			return rotateLeft(x);
+		}
